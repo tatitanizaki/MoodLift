@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "MoodLift",
+    "displayName": "MoodLift",
     "slug": "MoodLift",
     "version": "1.0.0",
     "orientation": "portrait",

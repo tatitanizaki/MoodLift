@@ -1,10 +1,10 @@
+// WorkoutScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 
-// Initialize Firebase only once
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Assuming Firebase is initialized in App.js, we can directly use getFirestore
+const db = getFirestore();
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
