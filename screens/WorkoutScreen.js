@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import { firebaseConfig } from '../firebaseConfig'; // Ensure this path is correct
 
 // Initialize Firebase only once
 const app = initializeApp(firebaseConfig);
@@ -54,4 +52,3 @@ const styles = StyleSheet.create({
 });
 
 export default WorkoutScreen;
-
