@@ -10,7 +10,15 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator initialRouteName="Welcome">
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen 
+        name="Welcome" 
+        component={WelcomeScreen} 
+        options={{
+          headerTitle: 'MoodLift', // Custom title for the Welcome screen
+          headerTitleAlign: 'center', // Center the title
+          headerShown: false, // Hide the default header bar
+        }}
+      />
       <Stack.Screen name="Workout" component={WorkoutScreen} />
     </Stack.Navigator>
   );
@@ -23,4 +31,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
 
