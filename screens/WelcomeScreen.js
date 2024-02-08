@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
   const handleVibeSelection = (vibe) => {
@@ -11,10 +11,12 @@ const WelcomeScreen = ({ navigation }) => {
       {/* Top Bar */}
       <View style={styles.topBar}>
         {/* Empty View to balance the title */}
-        <View style={{ flex: 1 }}></View> 
-        <Text style={styles.appName}>MoodLift</Text>
-        <Text style={styles.version}>v1.0</Text>
         <View style={{ flex: 1 }}></View>
+        <View style={styles.roundedShape}>
+          <Text style={styles.appNameInsideShape}>MoodLift</Text>
+        </View>
+        <View style={{ flex: 1 }}></View>
+        <Text style={styles.version}>v1.0</Text>
       </View>
 
       {/* Main Title */}
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -8 }],
   },
   mainTitle: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -102,6 +104,24 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: 'contain',
+  },
+  roundedShape: {
+    backgroundColor: '#8332ff',
+    borderRadius: 20, // Adjust this to get the roundness you desire
+    paddingHorizontal: 15, // Horizontal padding
+    paddingVertical: 5, // Vertical padding
+    // Add shadow or any other styling you desire to match your design
+    elevation: 5, // This adds a shadow on Android
+    shadowOpacity: 0.3, // This adds a shadow on iOS
+    shadowRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+  },
+  appNameInsideShape: {
+    fontSize: 18,
+    color: '#ffff', // Set this to the color you want for the text
+    fontWeight: 'bold',
+    // Add any other text styling you desire
   },
 });
 
