@@ -10,8 +10,11 @@ const WelcomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* Top Bar */}
       <View style={styles.topBar}>
+        {/* Empty View to balance the title */}
+        <View style={{ flex: 1 }}></View> 
         <Text style={styles.appName}>MoodLift</Text>
         <Text style={styles.version}>v1.0</Text>
+        <View style={{ flex: 1 }}></View>
       </View>
 
       {/* Main Title */}
@@ -23,19 +26,19 @@ const WelcomeScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => handleVibeSelection('easy')}
         >
-          <Text style={styles.buttonText}>Answer 1: Easy</Text>
+          <Text style={styles.buttonText}>Eh, I don't really feel like it today</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleVibeSelection('medium')}
         >
-          <Text style={styles.buttonText}>Answer 2: Medium</Text>
+          <Text style={styles.buttonText}>Let's get this done</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleVibeSelection('hard')}
         >
-          <Text style={styles.buttonText}>Answer 3: Hard</Text>
+          <Text style={styles.buttonText}>I want to feel the grasp of death upon me</Text>
         </TouchableOpacity>
       </View>
 
@@ -49,25 +52,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#6200EE', // Set your preferred solid background color here
+    backgroundColor: '#021545', 
   },
   topBar: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center', 
+    alignItems: 'center', 
     width: '100%',
     marginTop: 40,
+    position: 'relative',
   },
   appName: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
   },
   version: {
     fontSize: 16,
     color: '#fff',
+    position: 'absolute', // Position it absolutely
+    right: 20, // Place it towards the right
+    top: '50%', // Align vertically
+    transform: [{ translateY: -8 }],
   },
   mainTitle: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -83,9 +92,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonText: {
+    fontSize: 16,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#purpleDark', // Adjust the color to match your theme
+    color: '#021545', // Adjust the color to match your theme
   },
   decorativeImage: {
     // Styles for your decorative images
