@@ -4,11 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './screens/WelcomeScreen';
 import WorkoutScreen from './screens/WorkoutScreen';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from './firebaseConfig'; // Adjust the path if necessary
-
-// Initialize Firebase only once
-initializeApp(firebaseConfig);
 
 const Stack = createStackNavigator();
 
