@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-
-// Assuming Firebase is initialized in App.js, we can directly use getFirestore
-const db = getFirestore();
+import { db } from '../firebaseConfig';
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
