@@ -1,23 +1,31 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, StatusBar, Image } from 'react-native';
 
 const WelcomeScreen = ({ navigation }) => {
+  const currentDate = new Date().toDateString(); 
+  const greeting = 'Hello, Guillaume';
+
   const handleVibeSelection = (vibe) => {
     // TODO: Navigation logic
   };
 
   return (
-    <View style={styles.container}>
-      {/* Top Bar */}
-      <View style={styles.topBar}>
-        {/* Empty View to balance the title */}
-        <View style={{ flex: 1 }}></View>
-        <View style={styles.roundedShape}>
-          <Text style={styles.appNameInsideShape}>MoodLift</Text>
-        </View>
-        <View style={{ flex: 1 }}></View>
-        <Text style={styles.version}>v1.0</Text>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+            {/* Top Bar */}
+            <View style={styles.topBar}>
+                {/* Empty View to balance the title */}
+                <View style={{ flex: 1 }}></View>
+                <View style={styles.roundedShape}>
+                <Text style={styles.appNameInsideShape}>MoodLift</Text>
+                </View>
+                <View style={{ flex: 1 }}></View>
+                <Text style={styles.version}>v1.0</Text>
+            </View>
+            <View style={styles.dateGreetingContainer}>
+                <Text style={styles.dateText}>{currentDate}</Text>
+                <Text style={styles.greetingText}>{greeting}</Text>
+            </View>
 
       {/* Main Title */}
       <Text style={styles.mainTitle}>How is your vibe today?</Text>
@@ -44,17 +52,23 @@ const WelcomeScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-    </View>
+     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#081638', // Or any other color you're using for the top bar
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'left',
     padding: 20,
-    backgroundColor: '#021545', 
+    backgroundColor: '#081638', 
   },
   topBar: {
     flexDirection: 'row',
@@ -62,10 +76,11 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     width: '100%',
     marginTop: 40,
+    marginBottom: 40,
     position: 'relative',
   },
   appName: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
   },
@@ -77,27 +92,42 @@ const styles = StyleSheet.create({
     top: '50%', // Align vertically
     transform: [{ translateY: -8 }],
   },
+  dateGreetingContainer: {
+    alignItems: 'left', 
+    marginTop: 10,
+    marginBottoms: 10, 
+  },
+  dateText: {
+    fontSize: 16,
+    color: '#fff',
+  },  
+  greetingText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
   mainTitle: {
     fontSize: 40,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     marginVertical: 20,
+    marginTop: 50,
   },
   buttonContainer: {
     width: '100%',
   },
   button: {
-    backgroundColor: '#fff', // Use a semi-transparent color or adjust as needed
+    backgroundColor: '#273864', // Use a semi-transparent color or adjust as needed
     padding: 15,
     borderRadius: 25,
     marginVertical: 10,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 17,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#021545', // Adjust the color to match your theme
+    color: '#fff', // Adjust the color to match your theme
   },
   decorativeImage: {
     // Styles for your decorative images
@@ -118,7 +148,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
   },
   appNameInsideShape: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#ffff', // Set this to the color you want for the text
     fontWeight: 'bold',
     // Add any other text styling you desire
