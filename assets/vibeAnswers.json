@@ -1,0 +1,49 @@
+{
+    "easy": [
+      "Eh, I don't feel like it today",
+      "Man, I am lazy",
+      "I had a bad day",
+      "I am very tired",
+      "I'm just here because I have to",
+      "Can we do the bare minimum?",
+      "I'm on energy-saving mode today",
+      "Let’s keep expectations low, shall we?",
+      "Do I have to?",
+      "Just a tiny workout, then back to bed?",
+      "Is stretching considered a workout?",
+      "I’m like a sloth on a good day",
+      "Today calls for a gentle breeze, not a hurricane",
+      "My spirit animal is a panda, let’s not fight nature"
+    ],
+    "medium": [
+      "Let's get this done",
+      "I am here already, let's make this count",
+      "A bit tired, but ready to rock",
+      "I'm feeling decent, let's do some decent work",
+      "I've had coffee and I'm sorta ready",
+      "In the mood for some medium salsa, not too spicy",
+      "Ready to sweat, but not to death",
+      "50% energy, 100% heart",
+      "Let’s turn up the 'meh' to a 'yeah'",
+      "I can, I will, and I might complain just a little",
+      "Ready to workout like it’s a Wednesday",
+      "Not quite beast mode, more like Beauty and the Beast mode",
+      "Feeling like a solid 5/10, let’s go",
+      "Somewhere between meh and yay"
+    ],
+    "hard": [
+      "I came here to chew bubblegum and kick ass",
+      "I am training to be the fittest on earth",
+      "Who needs rest days? Let's crush it!",
+      "I'm in beast mode, let's unleash the beast",
+      "Pain is just weakness leaving the body",
+      "Let’s get down to business",
+      "It's go time! No excuses!",
+      "I'm all about that gain, no tren",
+      "I'm looking for that superhero workout today",
+      "It's PR time, baby!",
+      "I'm not stopping until I'm a superhero",
+      "I want to regret all my life decisions"
+    ]
+  }
+  
