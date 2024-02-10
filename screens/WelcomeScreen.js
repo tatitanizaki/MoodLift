@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, StatusBar, Image } from 'react-native';
+import vibeAnswers from '../assets/vibeAnswers.json';
 
 const WelcomeScreen = ({ navigation }) => {
   const currentDate = new Date().toDateString(); 
   const greeting = 'Hello, Guillaume';
+  const [questions, setQuestions] = useState({
+    easy: '',
+    medium: '',
+    hard: ''
+  });
+
+  useEffect(() => {
+    // Function to select a random question from each category
+    const getRandomQuestions = () => {
+      return {
+        easy: vibeAnswers.easy[Math.floor(Math.random() * vibeAnswers.easy.length)],
+        medium: vibeAnswers.medium[Math.floor(Math.random() * vibeAnswers.medium.length)],
+        hard: vibeAnswers.hard[Math.floor(Math.random() * vibeAnswers.hard.length)]
+      };
+    };
+
+    // Set the random questions when the component mounts
+    setQuestions(getRandomQuestions());
+  }, []);
 
   const handleVibeSelection = (vibe) => {
-    // TODO: Navigation logic
+    navigation.navigate('Workout', { mood: vibe });
   };
 
   return (
@@ -36,19 +56,19 @@ const WelcomeScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => handleVibeSelection('easy')}
         >
-          <Text style={styles.buttonText}>Eh, I don't really feel like it today</Text>
+          <Text style={styles.buttonText}>{questions.easy}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleVibeSelection('medium')}
         >
-          <Text style={styles.buttonText}>Let's get this done</Text>
+          <Text style={styles.buttonText}>{questions.medium}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleVibeSelection('hard')}
         >
-          <Text style={styles.buttonText}>I want to feel the grasp of death upon me</Text>
+          <Text style={styles.buttonText}>{questions.hard}</Text>
         </TouchableOpacity>
       </View>
 
