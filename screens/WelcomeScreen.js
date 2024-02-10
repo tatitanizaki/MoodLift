@@ -1,21 +1,51 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, StatusBar, Image } from 'react-native';
+import vibeAnswers from '../assets/vibeAnswers.json';
 
 const WelcomeScreen = ({ navigation }) => {
+  const currentDate = new Date().toDateString(); 
+  const greeting = 'Hello, Guillaume';
+  const [questions, setQuestions] = useState({
+    easy: '',
+    medium: '',
+    hard: ''
+  });
+
+  useEffect(() => {
+    // Function to select a random question from each category
+    const getRandomQuestions = () => {
+      return {
+        easy: vibeAnswers.easy[Math.floor(Math.random() * vibeAnswers.easy.length)],
+        medium: vibeAnswers.medium[Math.floor(Math.random() * vibeAnswers.medium.length)],
+        hard: vibeAnswers.hard[Math.floor(Math.random() * vibeAnswers.hard.length)]
+      };
+    };
+
+    // Set the random questions when the component mounts
+    setQuestions(getRandomQuestions());
+  }, []);
+
   const handleVibeSelection = (vibe) => {
-    // TODO: Navigation logic
+    navigation.navigate('Workout', { mood: vibe });
   };
 
   return (
-    <View style={styles.container}>
-      {/* Top Bar */}
-      <View style={styles.topBar}>
-        {/* Empty View to balance the title */}
-        <View style={{ flex: 1 }}></View> 
-        <Text style={styles.appName}>MoodLift</Text>
-        <Text style={styles.version}>v1.0</Text>
-        <View style={{ flex: 1 }}></View>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+            {/* Top Bar */}
+            <View style={styles.topBar}>
+                {/* Empty View to balance the title */}
+                <View style={{ flex: 1 }}></View>
+                <View style={styles.roundedShape}>
+                <Text style={styles.appNameInsideShape}>MoodLift</Text>
+                </View>
+                <View style={{ flex: 1 }}></View>
+                <Text style={styles.version}>v1.0</Text>
+            </View>
+            <View style={styles.dateGreetingContainer}>
+                <Text style={styles.dateText}>{currentDate}</Text>
+                <Text style={styles.greetingText}>{greeting}</Text>
+            </View>
 
       {/* Main Title */}
       <Text style={styles.mainTitle}>How is your vibe today?</Text>
@@ -26,33 +56,39 @@ const WelcomeScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => handleVibeSelection('easy')}
         >
-          <Text style={styles.buttonText}>Eh, I don't really feel like it today</Text>
+          <Text style={styles.buttonText}>{questions.easy}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleVibeSelection('medium')}
         >
-          <Text style={styles.buttonText}>Let's get this done</Text>
+          <Text style={styles.buttonText}>{questions.medium}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleVibeSelection('hard')}
         >
-          <Text style={styles.buttonText}>I want to feel the grasp of death upon me</Text>
+          <Text style={styles.buttonText}>{questions.hard}</Text>
         </TouchableOpacity>
       </View>
 
-    </View>
+     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#081638', // Or any other color you're using for the top bar
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'left',
     padding: 20,
-    backgroundColor: '#021545', 
+    backgroundColor: '#081638', 
   },
   topBar: {
     flexDirection: 'row',
@@ -60,10 +96,11 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     width: '100%',
     marginTop: 40,
+    marginBottom: 40,
     position: 'relative',
   },
   appName: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
   },
@@ -75,33 +112,66 @@ const styles = StyleSheet.create({
     top: '50%', // Align vertically
     transform: [{ translateY: -8 }],
   },
+  dateGreetingContainer: {
+    alignItems: 'left', 
+    marginTop: 10,
+    marginBottoms: 10, 
+  },
+  dateText: {
+    fontSize: 16,
+    color: '#fff',
+  },  
+  greetingText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
   mainTitle: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     marginVertical: 20,
+    marginTop: 50,
   },
   buttonContainer: {
     width: '100%',
   },
   button: {
-    backgroundColor: '#fff', // Use a semi-transparent color or adjust as needed
+    backgroundColor: '#273864', // Use a semi-transparent color or adjust as needed
     padding: 15,
     borderRadius: 25,
     marginVertical: 10,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 17,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#021545', // Adjust the color to match your theme
+    color: '#fff', // Adjust the color to match your theme
   },
   decorativeImage: {
     // Styles for your decorative images
     width: 100,
     height: 100,
     resizeMode: 'contain',
+  },
+  roundedShape: {
+    backgroundColor: '#8332ff',
+    borderRadius: 20, // Adjust this to get the roundness you desire
+    paddingHorizontal: 15, // Horizontal padding
+    paddingVertical: 5, // Vertical padding
+    // Add shadow or any other styling you desire to match your design
+    elevation: 5, // This adds a shadow on Android
+    shadowOpacity: 0.3, // This adds a shadow on iOS
+    shadowRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+  },
+  appNameInsideShape: {
+    fontSize: 20,
+    color: '#ffff', // Set this to the color you want for the text
+    fontWeight: 'bold',
+    // Add any other text styling you desire
   },
 });
 
