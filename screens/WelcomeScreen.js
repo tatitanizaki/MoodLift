@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, StatusBar, Image } from 'react-native';
 import vibeAnswers from '../assets/vibeAnswers.json';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 const WelcomeScreen = ({ navigation }) => {
-  const currentDate = new Date().toDateString(); 
-  const greeting = 'Hello, Guillaume';
+  // const currentDate = new Date().toDateString(); 
+  // const greeting = 'Hello, Guillaume';
   const [questions, setQuestions] = useState({
     easy: '',
     medium: '',
@@ -42,10 +43,37 @@ const WelcomeScreen = ({ navigation }) => {
                 <View style={{ flex: 1 }}></View>
                 <Text style={styles.version}>v1.0</Text>
             </View>
-            <View style={styles.dateGreetingContainer}>
+            <Svg height="100" width="100" viewBox="0 0 100 100" style={styles.svgStyle}>
+                <Circle cx="50" cy="50" r="50" fill="#9681ff" />
+                {/* Eyes */}
+                <Path 
+                    d="M 35 45 Q 40 55 45 45" 
+                    fill="none" 
+                    stroke="#000381" 
+                    strokeWidth="5" 
+                    strokeLinecap="round" 
+                />
+                <Path 
+                    d="M 55 45 Q 60 55 65 45" 
+                    fill="none" 
+                    stroke="#000381" 
+                    strokeWidth="5" 
+                    strokeLinecap="round" 
+                />
+                {/* Mouth */}
+                <Path 
+                    d="M 35 60 Q 50 70 65 60" 
+                    fill="none" 
+                    stroke="#000381" 
+                    strokeWidth="5" 
+                    strokeLinecap="round" 
+                />
+            </Svg>
+
+            {/*<View style={styles.dateGreetingContainer}>
                 <Text style={styles.dateText}>{currentDate}</Text>
                 <Text style={styles.greetingText}>{greeting}</Text>
-            </View>
+            </View> */}
 
       {/* Main Title */}
       <Text style={styles.mainTitle}>How is your vibe today?</Text>
@@ -80,15 +108,21 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#081638', // Or any other color you're using for the top bar
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'left',
+    alignItems: 'center',
     padding: 20,
     backgroundColor: '#081638', 
+  },
+  svgStyle: {
+    alignSelf: 'center', // This centers the SVG in its container
+    marginTop: 40,
   },
   topBar: {
     flexDirection: 'row',
@@ -96,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     width: '100%',
     marginTop: 40,
-    marginBottom: 40,
+    marginBottom: 5,
     position: 'relative',
   },
   appName: {
@@ -112,27 +146,27 @@ const styles = StyleSheet.create({
     top: '50%', // Align vertically
     transform: [{ translateY: -8 }],
   },
-  dateGreetingContainer: {
-    alignItems: 'left', 
-    marginTop: 10,
-    marginBottoms: 10, 
-  },
-  dateText: {
-    fontSize: 16,
-    color: '#fff',
-  },  
-  greetingText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
+  // dateGreetingContainer: {
+  //  alignItems: 'left', 
+  //  marginTop: 10,
+  //  marginBottoms: 10, 
+  //},
+  //dateText: {
+  //  fontSize: 16,
+  //  color: '#fff',
+  //},  
+  //greetingText: {
+  //  fontSize: 30,
+  //  fontWeight: 'bold',
+  //  color: '#fff',
+  //}, 
   mainTitle: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     marginVertical: 20,
-    marginTop: 50,
+    marginTop: 20,
   },
   buttonContainer: {
     width: '100%',
