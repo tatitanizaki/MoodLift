@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, StatusBar, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import vibeAnswers from '../assets/vibeAnswers.json';
 import Svg, { Circle, Path } from 'react-native-svg';
 
 const WelcomeScreen = ({ navigation }) => {
-  // const currentDate = new Date().toDateString(); 
-  // const greeting = 'Hello, Guillaume';
   const [questions, setQuestions] = useState({
     easy: '',
     medium: '',
@@ -69,12 +67,6 @@ const WelcomeScreen = ({ navigation }) => {
                     strokeLinecap="round" 
                 />
             </Svg>
-
-            {/*<View style={styles.dateGreetingContainer}>
-                <Text style={styles.dateText}>{currentDate}</Text>
-                <Text style={styles.greetingText}>{greeting}</Text>
-            </View> */}
-
       {/* Main Title */}
       <Text style={styles.mainTitle}>How is your vibe today?</Text>
 
@@ -146,20 +138,6 @@ const styles = StyleSheet.create({
     top: '50%', // Align vertically
     transform: [{ translateY: -8 }],
   },
-  // dateGreetingContainer: {
-  //  alignItems: 'left', 
-  //  marginTop: 10,
-  //  marginBottoms: 10, 
-  //},
-  //dateText: {
-  //  fontSize: 16,
-  //  color: '#fff',
-  //},  
-  //greetingText: {
-  //  fontSize: 30,
-  //  fontWeight: 'bold',
-  //  color: '#fff',
-  //}, 
   mainTitle: {
     fontSize: 30,
     fontWeight: 'bold',
