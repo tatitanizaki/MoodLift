@@ -19,7 +19,15 @@ function MyStack() {
           headerShown: false, // Hide the default header bar
         }}
       />
-      <Stack.Screen name="Workout" component={WorkoutScreen} />
+      <Stack.Screen 
+        name="Workout" 
+        component={WorkoutScreen} 
+        options={{
+          headerTitle: 'MoodLift', 
+          headerTitleAlign: 'center', 
+          headerShown: false, 
+        }}
+        />
     </Stack.Navigator>
   );
 }
