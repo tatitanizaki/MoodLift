@@ -47,14 +47,14 @@ const WelcomeScreen = ({ navigation }) => {
                 <Circle cx="50" cy="50" r="50" fill="#9681ff" />
                 {/* Eyes */}
                 <Path 
-                    d="M 35 45 Q 40 55 45 45" 
+                    d="M 35 45 Q 40 50 45 45" 
                     fill="none" 
                     stroke="#000381" 
                     strokeWidth="5" 
                     strokeLinecap="round" 
                 />
                 <Path 
-                    d="M 55 45 Q 60 55 65 45" 
+                    d="M 55 45 Q 60 50 65 45" 
                     fill="none" 
                     stroke="#000381" 
                     strokeWidth="5" 
