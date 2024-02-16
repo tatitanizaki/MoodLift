@@ -1,0 +1,114 @@
+[
+    {
+      "title": "20 Min EMOM",
+      "type": "EMOM",
+      "mood": "Medium",
+      "duration": 20,
+      "details": "Complete each set of movements at the start of every minute for 20 minutes.",
+      "movements": [
+        {"name": "Burpees", "reps": 5},
+        {"name": "Kettlebell Swings", "reps": 10}
+      ],
+      "equipment": ["Kettlebell"]
+    },
+    {
+      "title": "5 Min Push-up Challenge",
+      "type": "AMRAP",
+      "mood": "Easy",
+      "duration": 5,
+      "details": "Complete as many push-ups as possible in 5 minutes.",
+      "movements": [
+        {"name": "Push-ups", "reps": "As many as possible"}
+      ],
+      "equipment": ["No equipment"]
+    },
+    {
+      "title": "Quick Sprint",
+      "type": "For Time",
+      "mood": "Medium",
+      "duration": 10,
+      "details": "Complete as fast as possible.",
+      "movements": [
+        {"name": "800m Run", "reps": 1},
+        {"name": "Air Squats", "reps": 50},
+        {"name": "800m Run", "reps": 1}
+       ],
+      "equipment": ["No equipment"]
+      },
+      {
+      "title": "Tabata Burn",
+      "type": "Tabata",
+      "mood": "Easy",
+      "duration": 4,
+      "details": "Perform each exercise for 20 seconds, rest for 10 seconds, for 8 rounds.",
+      "movements": [
+        {"name": "Jump Rope", "reps": "20 seconds"},
+        {"name": "Mountain Climbers", "reps": "20 seconds"}
+       ],
+      "equipment": ["Jump Rope"]
+      },
+      {
+        "title": "Fitness Chipper",
+        "type": "Chipper",
+        "mood": "Hard",
+        "duration": 20,
+        "details": "Complete all movements in sequence as fast as possible.",
+        "movements": [
+          {"name": "Jumping Jacks", "reps": 100},
+          {"name": "Sit-ups", "reps": 75},
+          {"name": "Dumbbell Deadlifts", "reps": 50},
+          {"name": "Pull-ups", "reps": 25}
+        ],
+        "equipment": ["Dumbbells", "Pull-up Bar"]
+      },
+      {
+        "title": "Strength Squats",
+        "type": "Strength Training",
+        "mood": "Easy",
+        "duration": 15,
+        "details": "Complete 5 sets of heavy squats, resting 2-3 minutes between each set.",
+        "movements": [
+          {"name": "Heavy Squats", "reps": 7}
+        ],
+        "equipment": ["Barbell", "Squat Rack"]
+      },
+      {
+        "title": "HIIT Explosion",
+        "type": "HIIT",
+        "mood": "Medium",
+        "duration": 9,
+        "details": "3 rounds of 30 seconds of high-intensity exercise followed by 30 seconds rest.",
+        "movements": [
+          {"name": "Sprints", "reps": "30 seconds"},
+          {"name": "Kettlebell Swings", "reps": "30 seconds"},
+          {"name": "Box Jumps", "reps": "30 seconds"}
+        ],
+        "equipment": ["Kettlebell", "Plyo Box"]
+      },
+      {
+        "title": "Gymnastic Moves",
+        "type": "Gymnastics",
+        "mood": "Hard",
+        "duration": 15,
+        "details": "Complete 4 rounds of the following movements.",
+        "movements": [
+          {"name": "Handstand Push-ups", "reps": 10},
+          {"name": "Ring Dips", "reps": 15},
+          {"name": "Hollow Rocks", "reps": 20}
+        ],
+        "equipment": ["Gymnastic Rings"]
+      },
+      {
+        "title": "Mobility Stretch",
+        "type": "Mobility",
+        "mood": "Easy",
+        "duration": 20,
+        "details": "Spend 20 minutes focusing on stretching and mobility exercises.",
+        "movements": [
+          {"name": "Hip Openers", "reps": "5 minutes"},
+          {"name": "Shoulder Mobility", "reps": "5 minutes"},
+          {"name": "Ankle Mobility", "reps": "10 minutes"}
+        ],
+        "equipment": ["No equipment"]
+      }
+  ]
