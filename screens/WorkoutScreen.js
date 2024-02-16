@@ -44,6 +44,7 @@ function WorkoutScreen({ route }) {
                 <View key={index} style={styles.workoutContainer}>
                 <Text style={styles.workoutTitle}>{workout.title}</Text>
                 <Text style={styles.workoutDescription}>{workout.description}</Text>
+                <Text style={styles.workoutDescription}>{workout.Movements}</Text>
                 </View>
             ))}
             </ScrollView>
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
         marginTop: 20,
+        textAlign: 'center'
     },
     roundedShape: {
       backgroundColor: '#8332ff',
