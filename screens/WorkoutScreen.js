@@ -6,7 +6,7 @@ import { db } from '../firebaseConfig';
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
-  const [workouts, setWorkouts] = useState([]);
+  const [workout, setWorkout] = useState(null);
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -17,40 +17,62 @@ function WorkoutScreen({ route }) {
       querySnapshot.forEach((doc) => {
         fetchedWorkouts.push({ id: doc.id, ...doc.data() });
       });
-      setWorkouts(fetchedWorkouts);
+  
+      // Now select one workout randomly if any are found
+      if (fetchedWorkouts.length > 0) {
+        const randomIndex = Math.floor(Math.random() * fetchedWorkouts.length);
+        setWorkout(fetchedWorkouts[randomIndex]); // Assuming you have a state variable set up to hold the selected workout
+      }
     };
-
+  
     fetchWorkouts();
-  }, [mood]);
-
+  }, [mood]); // This dependency array ensures the effect runs again if mood changes
+  
   return (
     <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-            {/* Top Bar */}
-            <View style={styles.topBar}>
-                {/* Empty View to balance the title */}
-                <View style={{ flex: 1 }}></View>
-                <View style={styles.roundedShape}>
-                <Text style={styles.appNameInsideShape}>MoodLift</Text>
-                </View>
-                <View style={{ flex: 1 }}></View>
-                <Text style={styles.version}>v1.0</Text>
-            </View>
-            <ScrollView 
-              style={styles.scrollView}
-              contentContainerStyle={styles.scrollViewContent} // Apply layout styles here
-            >
-            {workouts.map((workout, index) => (
-                <View key={index} style={styles.workoutContainer}>
-                <Text style={styles.workoutTitle}>{workout.title}</Text>
-                <Text style={styles.workoutDescription}>{workout.description}</Text>
-                <Text style={styles.workoutDescription}>{workout.Movements}</Text>
-                </View>
-            ))}
-            </ScrollView>
+      <View style={styles.container}>
+        {/* Top Bar */}
+        <View style={styles.topBar}>
+          <View style={{ flex: 1 }}></View>
+          <View style={styles.roundedShape}>
+            <Text style={styles.appNameInsideShape}>MoodLift</Text>
+          </View>
+          <View style={{ flex: 1 }}></View>
+          <Text style={styles.version}>v1.0</Text>
         </View>
+        <ScrollView 
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}
+        >
+          {workout ? (
+            <>
+              <View key={workout.id} style={styles.workoutHeader}>
+                <Text style={styles.workoutTitle}>{workout.title}</Text>
+                <Text style={styles.workoutInfo}>{workout.duration} min</Text>
+                <Text style={styles.workoutInfo}>{workout.details}</Text>
+                <Text style={styles.workoutInfo}>
+                  {workout.equipment.length > 0 ? workout.equipment.join(' • ') : 'No equipment'}
+                </Text>                                 
+              </View>
+              {/* Render movements */}
+                {workout.movements.map((movement, index) => (
+                <View key={index} style={styles.movementContainer}>
+                  <View style={styles.movementIcon}>
+                    {/* Placeholder for movement icon */}
+                  </View>
+                  <Text style={styles.movementName}>{movement.name}</Text>
+                  <Text style={styles.movementReps}>{movement.reps}</Text>
+                </View> 
+              ))}
+            </>
+          ) : (
+            <Text style={styles.workoutDescription}>Select a mood to see a workout.</Text>
+          )}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
+  
 };
 
 const styles = StyleSheet.create({
@@ -98,18 +120,58 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
       },
+    workoutHeader: {
+        backgroundColor: '#273864',
+        borderRadius: 20,
+        padding: 20,
+        marginBottom: 20,
+    },
     workoutTitle: {
         fontSize: 25,
         fontWeight: 'bold',
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'left',
+        marginBottom: 10,
       },
     workoutDescription: {
         fontSize: 18,
         color: '#fff',
         marginTop: 20,
-        textAlign: 'center'
+        textAlign: 'left',
     },
+    workoutInfo: {
+        fontSize: 16,
+        color: '#fff',
+        opacity: 0.8,
+        marginBottom: 10,
+      },
+    movementContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#273864',
+        borderRadius: 15,
+        padding: 16,
+        marginBottom: 10,
+      },
+    movementName: {
+        fontSize: 18,
+        color: '#fff',
+        flex: 1, 
+      },
+    movementReps: {
+        fontSize: 18,
+        color: '#fff',
+      },
+      equipmentContainer: {
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        marginTop: 10, 
+        marginBottom: 10, 
+      },
+      equipmentText: {
+        fontSize: 16,
+        color: '#fff',
+      },
     roundedShape: {
       backgroundColor: '#8332ff',
       borderRadius: 20,
@@ -125,6 +187,21 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: '#ffff',
       fontWeight: 'bold',
+    },
+    workoutSectionTitle: {
+        fontSize:22,
+        color: '#ffff',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 30,
+    },
+    scrollView:{
+        flex: 1,
+        backgroundColor: '#081638'
+    },
+    scrollViewContent: {
+        alignItems: 'center', 
+        paddingVertical: 20, 
     },
   });
 
