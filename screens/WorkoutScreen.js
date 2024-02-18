@@ -28,13 +28,11 @@ function WorkoutScreen({ route }) {
     fetchWorkouts();
   }, [mood]); // This dependency array ensures the effect runs again if mood changes
   
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         {/* Top Bar */}
         <View style={styles.topBar}>
-          {/* Empty View to balance the title */}
           <View style={{ flex: 1 }}></View>
           <View style={styles.roundedShape}>
             <Text style={styles.appNameInsideShape}>MoodLift</Text>
