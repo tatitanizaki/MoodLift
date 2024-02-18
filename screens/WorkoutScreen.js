@@ -42,26 +42,32 @@ function WorkoutScreen({ route }) {
         </View>
         <ScrollView 
           style={styles.scrollView}
-          contentContainerStyle={styles.scrollViewContent} // Apply layout styles here
+          contentContainerStyle={styles.scrollViewContent}
         >
-          {workout ? ( // Assuming you are displaying only one workout based on the previous discussion
-            <View key={workout.id} style={styles.workoutContainer}>
-              <Text style={styles.workoutTitle}>{workout.title}</Text>
-              <Text style={styles.workoutDescription}>{workout.details}</Text>
+          {workout ? (
+            <>
+              <View key={workout.id} style={styles.workoutHeader}>
+                <Text style={styles.workoutTitle}>{workout.title}</Text>
+                <Text style={styles.workoutInfo}>{workout.duration} min</Text>
+                <Text style={styles.workoutInfo}>{workout.details}</Text>
+                <Text style={styles.workoutInfo}>
+                  {workout.equipment.length > 0 ? workout.equipment.join(' • ') : 'No equipment'}
+                </Text>                                 
+              </View>
               {/* Render movements */}
-              <Text style={styles.workoutSectionTitle}>Movements</Text>
-              {workout.movements.map((movement, index) => (
-                <Text key={index} style={styles.workoutDescription}>
-                  {movement.name} - {movement.reps}
-                </Text>
+                {workout.movements.map((movement, index) => (
+                <View key={index} style={styles.movementContainer}>
+                  <View style={styles.movementIcon}>
+                    {/* Placeholder for movement icon */}
+                  </View>
+                  <Text style={styles.movementName}>{movement.name}</Text>
+                  <Text style={styles.movementReps}>{movement.reps}</Text>
+                </View> 
               ))}
-              {/* Render equipment */}
-              <Text style={styles.workoutSectionTitle}>Equipment</Text>
-              {workout.equipment.length > 0 ? workout.equipment.map((item, index) => (
-                <Text key={index} style={styles.workoutDescription}>{item}</Text>
-              )) : <Text style={styles.workoutDescription}>No equipment</Text>}
-            </View>
-          ) : <Text style={styles.workoutDescription}>Select a mood to see a workout.</Text>}
+            </>
+          ) : (
+            <Text style={styles.workoutDescription}>Select a mood to see a workout.</Text>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -114,20 +120,58 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
       },
+    workoutHeader: {
+        backgroundColor: '#273864',
+        borderRadius: 20,
+        padding: 20,
+        marginBottom: 20,
+    },
     workoutTitle: {
         fontSize: 25,
         fontWeight: 'bold',
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'left',
+        marginBottom: 10,
       },
     workoutDescription: {
         fontSize: 18,
         color: '#fff',
         marginTop: 20,
-        textAlign: 'center',
-        paddingLeft: 15,
-        paddingRight: 15,
+        textAlign: 'left',
     },
+    workoutInfo: {
+        fontSize: 16,
+        color: '#fff',
+        opacity: 0.8,
+        marginBottom: 10,
+      },
+    movementContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#273864',
+        borderRadius: 15,
+        padding: 16,
+        marginBottom: 10,
+      },
+    movementName: {
+        fontSize: 18,
+        color: '#fff',
+        flex: 1, 
+      },
+    movementReps: {
+        fontSize: 18,
+        color: '#fff',
+      },
+      equipmentContainer: {
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        marginTop: 10, 
+        marginBottom: 10, 
+      },
+      equipmentText: {
+        fontSize: 16,
+        color: '#fff',
+      },
     roundedShape: {
       backgroundColor: '#8332ff',
       borderRadius: 20,
