@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, Platform, StatusBar } from 'react-native';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import StartButton from '../components/StartButton';
+
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
@@ -18,7 +20,6 @@ function WorkoutScreen({ route }) {
         fetchedWorkouts.push({ id: doc.id, ...doc.data() });
       });
   
-      // Now select one workout randomly if any are found
       if (fetchedWorkouts.length > 0) {
         const randomIndex = Math.floor(Math.random() * fetchedWorkouts.length);
         setWorkout(fetchedWorkouts[randomIndex]); // Assuming you have a state variable set up to hold the selected workout
@@ -28,6 +29,10 @@ function WorkoutScreen({ route }) {
     fetchWorkouts();
   }, [mood]); // This dependency array ensures the effect runs again if mood changes
   
+  const handleStartPress = () => {
+    console.log('Start button pressed!');
+}
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -68,6 +73,7 @@ function WorkoutScreen({ route }) {
           ) : (
             <Text style={styles.workoutDescription}>Select a mood to see a workout.</Text>
           )}
+          <StartButton onPress={handleStartPress} />
         </ScrollView>
       </View>
     </SafeAreaView>
