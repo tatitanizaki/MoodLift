@@ -18,7 +18,6 @@ function WorkoutScreen({ route }) {
         fetchedWorkouts.push({ id: doc.id, ...doc.data() });
       });
   
-      // Now select one workout randomly if any are found
       if (fetchedWorkouts.length > 0) {
         const randomIndex = Math.floor(Math.random() * fetchedWorkouts.length);
         setWorkout(fetchedWorkouts[randomIndex]); // Assuming you have a state variable set up to hold the selected workout
