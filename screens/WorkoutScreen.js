@@ -131,7 +131,6 @@ function WorkoutScreen({ route }) {
           {timerOn && (
             <View style={styles.timerDisplay}>
               <Text style={styles.timerText}>{formatTime(timer)}</Text>
-              <Text style={styles.holdToFinishText}>Hold to finish</Text>
               {/* Swipe to Finish Component (Placeholder) - Implement with react-native-gesture-handler */}
             </View>
           )}
