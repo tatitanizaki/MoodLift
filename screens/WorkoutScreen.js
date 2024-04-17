@@ -16,6 +16,7 @@ function WorkoutScreen({ route }) {
   const [workout, setWorkout] = useState(null);
   const [timerOn, setTimerOn] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -52,6 +53,7 @@ function WorkoutScreen({ route }) {
 
   const handleStartStop = () => {
     setTimerOn(!timerOn);
+    setTimerStarted(true);
     if (!timerOn) {
       setTimer(0);
     }
