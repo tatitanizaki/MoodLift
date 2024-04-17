@@ -60,6 +60,15 @@ function WorkoutScreen({ route }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        {/* Top Bar */}
+        <View style={styles.topBar}>
+          <View style={{ flex: 1 }}></View>
+          <View style={styles.roundedShape}>
+            <Text style={styles.appNameInsideShape}>MoodLift</Text>
+          </View>
+          <View style={{ flex: 1 }}></View>
+          <Text style={styles.version}>v1.0</Text>
+        </View>
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.scrollViewContent}
@@ -114,7 +123,33 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    width: "100%", // Ensure it stretches across the screen
+    justifyContent: "flex-start",
+    alignItems: "center", // Changed to center to match the content alignment
     padding: 20,
+    backgroundColor: "#081638",
+  },
+  topBar: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    marginTop: 40,
+    marginBottom: 20,
+    position: "relative",
+  },
+  appName: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  version: {
+    fontSize: 16,
+    color: "#fff",
+    position: "absolute",
+    right: 20,
+    top: "50%",
+    transform: [{ translateY: -8 }],
   },
   scrollView: {
     width: "100%",
@@ -123,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#273864",
     borderRadius: 20,
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   workoutTitle: {
     fontSize: 24,
@@ -136,10 +171,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   movementContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#273864",
     borderRadius: 15,
-    padding: 10,
-    marginBottom: 10,
+    padding: 16,
+    marginBottom: 15,
   },
   movementName: {
     fontSize: 18,
@@ -155,6 +192,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     padding: 20,
+  },
+  workoutSectionTitle: {
+    fontSize: 22,
+    color: "#ffff",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 30,
   },
   startButton: {
     backgroundColor: "#8332ff",
@@ -179,7 +223,22 @@ const styles = StyleSheet.create({
     fontSize: 48,
     color: "#fff",
   },
-  // Additional styles as needed
+  roundedShape: {
+    backgroundColor: "#8332ff",
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    elevation: 5,
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+  },
+  appNameInsideShape: {
+    fontSize: 20,
+    color: "#ffff",
+    fontWeight: "bold",
+  },
 });
 
 export default WorkoutScreen;
