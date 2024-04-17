@@ -10,6 +10,7 @@ import {
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { formatTime } from "../utils/formatTime";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
@@ -17,6 +18,8 @@ function WorkoutScreen({ route }) {
   const [timerOn, setTimerOn] = useState(false);
   const [timer, setTimer] = useState(0);
   const [timerStarted, setTimerStarted] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [workoutEnded, setWorkoutEnded] = useState(false);
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -52,11 +55,22 @@ function WorkoutScreen({ route }) {
   }, [timerOn]);
 
   const handleStartStop = () => {
+    if (workoutEnded) {
+      // Prevent the start/stop function from doing anything if the workout has ended
+      return;
+    }
     setTimerOn(!timerOn);
     setTimerStarted(true);
     if (!timerOn) {
       setTimer(0);
     }
+  };
+
+  const handleEndWorkout = () => {
+    setTimerOn(false); // Stop the timer
+    setWorkoutEnded(true); // Mark the workout as ended
+    setShowConfetti(true); // Start the confetti animation
+    setTimeout(() => setShowConfetti(false), 5000); // Stop confetti after 5 seconds
   };
 
   return (
@@ -101,18 +115,30 @@ function WorkoutScreen({ route }) {
           )}
           <TouchableOpacity
             onPress={handleStartStop}
+            onLongPress={handleEndWorkout}
             style={styles.startButton}
           >
             <Text style={styles.buttonText}>
-              {timerOn ? "Stop" : "Let's Go"}
+              {timerStarted && !timerOn
+                ? "Resume"
+                : timerOn
+                ? "Pause"
+                : workoutEnded
+                ? "Good Job!"
+                : "Let's Go"}
             </Text>
           </TouchableOpacity>
           {timerOn && (
             <View style={styles.timerDisplay}>
               <Text style={styles.timerText}>{formatTime(timer)}</Text>
+              <Text style={styles.holdToFinishText}>Hold to finish</Text>
+              {/* Swipe to Finish Component (Placeholder) - Implement with react-native-gesture-handler */}
             </View>
           )}
         </ScrollView>
+        {showConfetti && (
+          <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -240,6 +266,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#ffff",
     fontWeight: "bold",
+  },
+  holdToFinishText: {
+    textAlign: "center",
+    color: "white",
+    marginTop: 10,
   },
 });
 
