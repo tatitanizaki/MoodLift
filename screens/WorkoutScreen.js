@@ -55,15 +55,12 @@ function WorkoutScreen({ route }) {
   }, [timerOn]);
 
   const handleStartStop = () => {
-    if (workoutEnded) {
-      // Prevent the start/stop function from doing anything if the workout has ended
-      return;
-    }
-    setTimerOn(!timerOn);
-    setTimerStarted(true);
-    if (!timerOn) {
+    if (!timerStarted) {
+      // Only reset the timer and mark it as started if it's the very first start
       setTimer(0);
+      setTimerStarted(true);
     }
+    setTimerOn(!timerOn); // Toggle the timer on or off
   };
 
   const handleEndWorkout = () => {
@@ -119,20 +116,24 @@ function WorkoutScreen({ route }) {
             style={styles.startButton}
           >
             <Text style={styles.buttonText}>
-              {timerStarted && !timerOn
-                ? "Resume"
+              {workoutEnded
+                ? "Good Job!"
                 : timerOn
                 ? "Pause"
-                : workoutEnded
-                ? "Good Job!"
+                : timerStarted
+                ? "Resume"
                 : "Let's Go"}
             </Text>
           </TouchableOpacity>
-          {timerOn && (
-            <View style={styles.timerDisplay}>
-              <Text style={styles.timerText}>{formatTime(timer)}</Text>
-              {/* Swipe to Finish Component (Placeholder) - Implement with react-native-gesture-handler */}
-            </View>
+          {timerStarted && (
+            <>
+              {!workoutEnded && (
+                <Text style={styles.holdToFinishText}>Hold to finish</Text>
+              )}
+              <View style={styles.timerDisplay}>
+                <Text style={styles.timerText}>{formatTime(timer)}</Text>
+              </View>
+            </>
           )}
         </ScrollView>
         {showConfetti && (
