@@ -9,12 +9,13 @@ import {
 } from "react-native";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { formatTime } from "../utils/formatTime";
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
   const [workout, setWorkout] = useState(null);
-  const [timer, setTimer] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
+  const [timer, setTimer] = useState(0);
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -40,17 +41,20 @@ function WorkoutScreen({ route }) {
 
     if (timerOn) {
       interval = setInterval(() => {
-        setTimer((prevTime) => prevTime + 1);
-      }, 1000);
+        setTimer((prevTime) => prevTime + 10);
+      }, 10);
     } else if (!timerOn && timer !== 0) {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
-  }, [timerOn, timer]);
+  }, [timerOn]);
 
   const handleStartStop = () => {
     setTimerOn(!timerOn);
+    if (!timerOn) {
+      setTimer(0);
+    }
   };
 
   return (
@@ -84,23 +88,18 @@ function WorkoutScreen({ route }) {
               Select a mood to see a workout.
             </Text>
           )}
-          {timerOn ? (
+          <TouchableOpacity
+            onPress={handleStartStop}
+            style={styles.startButton}
+          >
+            <Text style={styles.buttonText}>
+              {timerOn ? "Stop" : "Let's Go"}
+            </Text>
+          </TouchableOpacity>
+          {timerOn && (
             <View style={styles.timerDisplay}>
-              <Text style={styles.timerText}>{timer}</Text>
-              <TouchableOpacity
-                onPress={handleStartStop}
-                style={styles.stopButton}
-              >
-                <Text style={styles.buttonText}>Stop</Text>
-              </TouchableOpacity>
+              <Text style={styles.timerText}>{formatTime(timer)}</Text>
             </View>
-          ) : (
-            <TouchableOpacity
-              onPress={handleStartStop}
-              style={styles.startButton}
-            >
-              <Text style={styles.buttonText}>Let's Go</Text>
-            </TouchableOpacity>
           )}
         </ScrollView>
       </View>
@@ -157,15 +156,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 20,
   },
-  timerDisplay: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  timerText: {
-    fontSize: 48,
-    color: "#fff",
-  },
   startButton: {
     backgroundColor: "#8332ff",
     borderRadius: 75,
@@ -173,19 +163,21 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
     marginTop: 50,
-  },
-  stopButton: {
-    marginTop: 20,
-    backgroundColor: "#FF6347",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 25,
   },
   buttonText: {
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
+  },
+  timerDisplay: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  timerText: {
+    fontSize: 48,
+    color: "#fff",
   },
   // Additional styles as needed
 });
