@@ -9,12 +9,14 @@ import {
 } from "react-native";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { formatTime } from "../utils/formatTime";
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
   const [workout, setWorkout] = useState(null);
-  const [timer, setTimer] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -40,22 +42,35 @@ function WorkoutScreen({ route }) {
 
     if (timerOn) {
       interval = setInterval(() => {
-        setTimer((prevTime) => prevTime + 1);
-      }, 1000);
+        setTimer((prevTime) => prevTime + 10);
+      }, 10);
     } else if (!timerOn && timer !== 0) {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
-  }, [timerOn, timer]);
+  }, [timerOn]);
 
   const handleStartStop = () => {
     setTimerOn(!timerOn);
+    setTimerStarted(true);
+    if (!timerOn) {
+      setTimer(0);
+    }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        {/* Top Bar */}
+        <View style={styles.topBar}>
+          <View style={{ flex: 1 }}></View>
+          <View style={styles.roundedShape}>
+            <Text style={styles.appNameInsideShape}>MoodLift</Text>
+          </View>
+          <View style={{ flex: 1 }}></View>
+          <Text style={styles.version}>v1.0</Text>
+        </View>
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.scrollViewContent}
@@ -84,23 +99,18 @@ function WorkoutScreen({ route }) {
               Select a mood to see a workout.
             </Text>
           )}
-          {timerOn ? (
+          <TouchableOpacity
+            onPress={handleStartStop}
+            style={styles.startButton}
+          >
+            <Text style={styles.buttonText}>
+              {timerOn ? "Stop" : "Let's Go"}
+            </Text>
+          </TouchableOpacity>
+          {timerOn && (
             <View style={styles.timerDisplay}>
-              <Text style={styles.timerText}>{timer}</Text>
-              <TouchableOpacity
-                onPress={handleStartStop}
-                style={styles.stopButton}
-              >
-                <Text style={styles.buttonText}>Stop</Text>
-              </TouchableOpacity>
+              <Text style={styles.timerText}>{formatTime(timer)}</Text>
             </View>
-          ) : (
-            <TouchableOpacity
-              onPress={handleStartStop}
-              style={styles.startButton}
-            >
-              <Text style={styles.buttonText}>Let's Go</Text>
-            </TouchableOpacity>
           )}
         </ScrollView>
       </View>
@@ -115,7 +125,33 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    width: "100%", // Ensure it stretches across the screen
+    justifyContent: "flex-start",
+    alignItems: "center", // Changed to center to match the content alignment
     padding: 20,
+    backgroundColor: "#081638",
+  },
+  topBar: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    marginTop: 40,
+    marginBottom: 20,
+    position: "relative",
+  },
+  appName: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  version: {
+    fontSize: 16,
+    color: "#fff",
+    position: "absolute",
+    right: 20,
+    top: "50%",
+    transform: [{ translateY: -8 }],
   },
   scrollView: {
     width: "100%",
@@ -124,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#273864",
     borderRadius: 20,
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   workoutTitle: {
     fontSize: 24,
@@ -137,10 +173,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   movementContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#273864",
     borderRadius: 15,
-    padding: 10,
-    marginBottom: 10,
+    padding: 16,
+    marginBottom: 15,
   },
   movementName: {
     fontSize: 18,
@@ -157,14 +195,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 20,
   },
-  timerDisplay: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  timerText: {
-    fontSize: 48,
-    color: "#fff",
+  workoutSectionTitle: {
+    fontSize: 22,
+    color: "#ffff",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 30,
   },
   startButton: {
     backgroundColor: "#8332ff",
@@ -173,21 +209,38 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
     marginTop: 50,
-  },
-  stopButton: {
-    marginTop: 20,
-    backgroundColor: "#FF6347",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 25,
   },
   buttonText: {
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
   },
-  // Additional styles as needed
+  timerDisplay: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  timerText: {
+    fontSize: 48,
+    color: "#fff",
+  },
+  roundedShape: {
+    backgroundColor: "#8332ff",
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    elevation: 5,
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+  },
+  appNameInsideShape: {
+    fontSize: 20,
+    color: "#ffff",
+    fontWeight: "bold",
+  },
 });
 
 export default WorkoutScreen;
