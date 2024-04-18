@@ -7,10 +7,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { formatTime } from "../utils/formatTime";
 import ConfettiCannon from "react-native-confetti-cannon";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 function WorkoutScreen({ route }) {
   const { mood } = route.params;
@@ -20,6 +22,7 @@ function WorkoutScreen({ route }) {
   const [timerStarted, setTimerStarted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [workoutEnded, setWorkoutEnded] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -75,11 +78,17 @@ function WorkoutScreen({ route }) {
       <View style={styles.container}>
         {/* Top Bar */}
         <View style={styles.topBar}>
-          <View style={{ flex: 1 }}></View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <Icon name="arrow-back" size={30} color="#fff" />
+          </TouchableOpacity>
+          {/* <View style={{ flex: 1 }}></View> */}
           <View style={styles.roundedShape}>
             <Text style={styles.appNameInsideShape}>MoodLift</Text>
           </View>
-          <View style={{ flex: 1 }}></View>
+          {/* <View style={{ flex: 1 }}></View> */}
           <Text style={styles.version}>v1.0</Text>
         </View>
         <ScrollView
@@ -159,25 +168,45 @@ const styles = StyleSheet.create({
   },
   topBar: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center", // Adjust to center for main content
     width: "100%",
     marginTop: 40,
     marginBottom: 20,
-    position: "relative",
+  },
+  backButton: {
+    flex: 1, // Give flex space
+    maxWidth: 50, // Limit width to ensure it doesn't push other elements excessively
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   appName: {
     fontSize: 30,
     fontWeight: "bold",
     color: "#fff",
   },
+  roundedShape: {
+    flex: 1, // Allow more space for the title to ensure it remains centered
+    alignItems: "center",
+    backgroundColor: "#8332ff",
+    borderRadius: 20,
+    // paddingHorizontal: 15,
+    paddingVertical: 5,
+    marginLeft: 75,
+  },
+  appNameInsideShape: {
+    fontSize: 20,
+    color: "#ffff",
+    fontWeight: "bold",
+  },
   version: {
     fontSize: 16,
     color: "#fff",
-    position: "absolute",
-    right: 20,
-    top: "50%",
-    transform: [{ translateY: -8 }],
+    flex: 1,
+    textAlign: "right",
+    paddingRight: 10,
   },
   scrollView: {
     width: "100%",
@@ -250,22 +279,6 @@ const styles = StyleSheet.create({
   timerText: {
     fontSize: 48,
     color: "#fff",
-  },
-  roundedShape: {
-    backgroundColor: "#8332ff",
-    borderRadius: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    elevation: 5,
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-  },
-  appNameInsideShape: {
-    fontSize: 20,
-    color: "#ffff",
-    fontWeight: "bold",
   },
   holdToFinishText: {
     textAlign: "center",
