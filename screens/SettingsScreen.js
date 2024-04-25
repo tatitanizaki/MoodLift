@@ -13,7 +13,20 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const SettingsScreen = ({ navigation }) => {
   const [selectedEquipment, setSelectedEquipment] = useState(new Set());
-  const equipmentOptions = ["Kettlebell", "Dumbbells", "Jump Rope", "Box"]; // Define your equipment options
+  const equipmentOptions = [
+    "Kettlebell",
+    "Dumbbells",
+    "Jump Rope",
+    "Box",
+    "Medicine Ball",
+    "Pull-up Bar",
+    "Barbell",
+    "Weight Plates",
+    "Agility Ladder",
+    "Cones",
+    "Balance Ball",
+    "Mat",
+  ]; // Define your equipment options
 
   useEffect(() => {
     // Load saved equipment selections from local storage on mount
