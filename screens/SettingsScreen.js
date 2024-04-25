@@ -70,9 +70,6 @@ const SettingsScreen = ({ navigation }) => {
         <ScrollView style={styles.scrollView}>
           <View style={styles.content}>
             <Text style={styles.sectionTitle}>Select equipment</Text>
-            <Text style={styles.sectionSubtitle}>
-              Pick the equipment you have:
-            </Text>
             {equipmentOptions.map((equipment) => (
               <View key={equipment} style={styles.checkboxContainer}>
                 <Checkbox
@@ -110,6 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     paddingVertical: 20,
+    marginTop: 50,
   },
   backButton: {
     // Define your back button styles here
@@ -117,10 +115,12 @@ const styles = StyleSheet.create({
   roundedShape: {
     backgroundColor: "#8332ff",
     borderRadius: 20,
-    paddingHorizontal: 15,
-    flex: 1, // Flex is used to center the title
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    flex: 2, // Flex is used to center the title
     justifyContent: "center", // Center content vertically
     alignItems: "center", // Center content horizontally
+    marginLeft: 80,
   },
   appNameInsideShape: {
     fontSize: 20,
@@ -141,14 +141,8 @@ const styles = StyleSheet.create({
     color: "#ffffff", // Or any other color suitable for your app design
   },
   sectionTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
+    fontSize: 18,
     color: "#ffffff", // Or any other color suitable for your app design
-    marginBottom: 8,
-  },
-  sectionSubtitle: {
-    fontSize: 16,
-    color: "#bbbbbb", // Or any other color suitable for your app design
     marginBottom: 16,
   },
   // Add any additional styles that you need
