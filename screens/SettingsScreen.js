@@ -6,12 +6,58 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { Checkbox } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+
+const initialLayout = { width: Dimensions.get("window").width };
+
+const EquipmentTab = ({
+  selectedEquipment,
+  handleSelectEquipment,
+  equipmentOptions,
+}) => {
+  return (
+    <ScrollView style={styles.tabScene}>
+      {equipmentOptions.map((equipment) => (
+        <View key={equipment} style={styles.checkboxContainer}>
+          <Checkbox
+            status={selectedEquipment.has(equipment) ? "checked" : "unchecked"}
+            onPress={() => handleSelectEquipment(equipment)}
+          />
+          <Text style={styles.label}>{equipment}</Text>
+        </View>
+      ))}
+    </ScrollView>
+  );
+};
+
+const SkillsTab = ({ selectedSkills, handleSelectSkill, skillsOptions }) => {
+  return (
+    <ScrollView style={styles.tabScene}>
+      {skillsOptions.map((skill) => (
+        <View key={skill} style={styles.checkboxContainer}>
+          <Checkbox
+            status={selectedSkills.has(skill) ? "checked" : "unchecked"}
+            onPress={() => handleSelectSkill(skill)}
+          />
+          <Text style={styles.label}>{skill}</Text>
+        </View>
+      ))}
+    </ScrollView>
+  );
+};
 
 const SettingsScreen = ({ navigation }) => {
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "equipment", title: "Equipment" },
+    { key: "skills", title: "Skills" },
+  ]);
+
   const [selectedEquipment, setSelectedEquipment] = useState(new Set());
   const equipmentOptions = [
     "Kettlebell",
@@ -26,7 +72,7 @@ const SettingsScreen = ({ navigation }) => {
     "Cones",
     "Balance Ball",
     "Mat",
-  ]; // Define your equipment options
+  ];
 
   useEffect(() => {
     // Load saved equipment selections from local storage on mount
@@ -64,6 +110,52 @@ const SettingsScreen = ({ navigation }) => {
     }
   };
 
+  const [selectedSkills, setSelectedSkills] = useState(new Set());
+  const skillsOptions = ["Squats", "Lunges", "Push-ups"];
+
+  const handleSelectSkill = async (skill) => {
+    const newSelection = new Set(selectedSkills); // Use the correct state variable name here
+    if (newSelection.has(skill)) {
+      newSelection.delete(skill);
+    } else {
+      newSelection.add(skill);
+    }
+    setSelectedSkills(newSelection);
+
+    // Save the updated selections to local storage
+    try {
+      await AsyncStorage.setItem(
+        "selectedSkills", // Make sure the key is consistent with the state variable name
+        JSON.stringify([...newSelection])
+      );
+    } catch (error) {
+      console.error("Failed to save skills settings.", error);
+    }
+  };
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "equipment":
+        return (
+          <EquipmentTab
+            selectedEquipment={selectedEquipment}
+            handleSelectEquipment={handleSelectEquipment}
+            equipmentOptions={equipmentOptions}
+          />
+        );
+      case "skills":
+        return (
+          <SkillsTab
+            selectedSkills={selectedSkills}
+            handleSelectSkill={handleSelectSkill}
+            skillsOptions={skillsOptions}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -74,29 +166,15 @@ const SettingsScreen = ({ navigation }) => {
           >
             <FontAwesome5 name="arrow-left" size={25} color="#FFFFFF" />
           </TouchableOpacity>
-          <View style={styles.roundedShape}>
-            <Text style={styles.appNameInsideShape}>Workout Settings</Text>
-          </View>
-          {/* The extra View below keeps the title centered without introducing stray text */}
-          <View style={{ flex: 1 }} />
+          <Text style={styles.title}>Workout Settings</Text>
         </View>
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.content}>
-            <Text style={styles.sectionTitle}>Select equipment</Text>
-            {equipmentOptions.map((equipment) => (
-              <View key={equipment} style={styles.checkboxContainer}>
-                <Checkbox
-                  status={
-                    selectedEquipment.has(equipment) ? "checked" : "unchecked"
-                  }
-                  onPress={() => handleSelectEquipment(equipment)}
-                />
-                <Text style={styles.equipmentLabel}>{equipment}</Text>
-              </View>
-            ))}
-            {/* Add more UI components for other settings like skills */}
-          </View>
-        </ScrollView>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          renderTabBar={(props) => <TabBar {...props} style={styles.tabBar} />}
+        />
       </View>
     </SafeAreaView>
   );
@@ -158,7 +236,23 @@ const styles = StyleSheet.create({
     color: "#ffffff", // Or any other color suitable for your app design
     marginBottom: 16,
   },
-  // Add any additional styles that you need
+  title: {
+    flex: 1,
+    textAlign: "center",
+    fontSize: 20,
+    color: "#FFFFFF",
+    fontWeight: "bold",
+  },
+  tabBar: {
+    backgroundColor: "#8332ff",
+  },
+  tabScene: {
+    padding: 10,
+  },
+  label: {
+    fontSize: 16,
+    marginLeft: 8,
+  },
 });
 
 export default SettingsScreen;
