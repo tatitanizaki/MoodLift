@@ -182,6 +182,19 @@ const SettingsScreen = ({ navigation }) => {
               style={styles.tabBar}
               labelStyle={styles.tabLabel}
               indicatorStyle={styles.tabIndicator}
+              tabStyle={styles.tabStyle} // New style for the individual tab
+              renderLabel={({ route, focused, color }) => (
+                <View
+                  style={[
+                    styles.tabLabelContainer,
+                    focused ? styles.tabLabelFocused : null,
+                  ]}
+                >
+                  <Text style={[styles.tabLabelText, { color }]}>
+                    {route.title}
+                  </Text>
+                </View>
+              )}
             />
           )}
         />
@@ -305,20 +318,33 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   tabBar: {
-    // If you need to adjust the tab bar style as well, do it here
-    backgroundColor: "transparent", // Or any other color
-    elevation: 0, // Remove shadow on Android
-    shadowOpacity: 0, // Remove shadow on iOS
-    overflow: "hidden", // Hide the overflow on Android
-    borderTopLeftRadius: 20, // Match the border radius with the tab content
-    borderTopRightRadius: 20, // Match the border radius with the tab content
-    // Other styles...
+    backgroundColor: "#081638",
+    elevation: 0, // remove shadow on Android
+    shadowOpacity: 0, // remove shadow on iOS
+    overflow: "hidden", // Prevent children from overlapping
   },
   tabLabel: {
     color: "#FFFFFF",
   },
   tabIndicator: {
     backgroundColor: "#FFFFFF",
+  },
+  tabLabelContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: 10,
+    backgroundColor: "#273864", // The color for the tab label container
+    marginHorizontal: 4, // Optional: add some space between tabs
+  },
+  tabLabelFocused: {
+    backgroundColor: "#6C5CE7", // Color for the focused tab
+  },
+  tabLabelText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
