@@ -134,18 +134,22 @@ const SettingsScreen = ({ navigation }) => {
 
   const renderScene = SceneMap({
     equipment: () => (
-      <EquipmentTab
-        selectedEquipment={selectedEquipment}
-        handleSelectEquipment={handleSelectEquipment}
-        equipmentOptions={equipmentOptions}
-      />
+      <View style={styles.tabContainer}>
+        <EquipmentTab
+          selectedEquipment={selectedEquipment}
+          handleSelectEquipment={handleSelectEquipment}
+          equipmentOptions={equipmentOptions}
+        />
+      </View>
     ),
     skills: () => (
-      <SkillsTab
-        selectedSkills={selectedSkills}
-        handleSelectSkill={handleSelectSkill}
-        skillsOptions={skillsOptions}
-      />
+      <View style={styles.tabContainer}>
+        <SkillsTab
+          selectedSkills={selectedSkills}
+          handleSelectSkill={handleSelectSkill}
+          skillsOptions={skillsOptions}
+        />
+      </View>
     ),
   });
 
@@ -251,6 +255,18 @@ const styles = StyleSheet.create({
   tabScene: {
     padding: 10,
   },
+  tabContainer: {
+    flex: 1,
+    backgroundColor: "#273864", // The color you want for the tab content
+    borderRadius: 20, // Adjust the border radius as needed
+    padding: 20, // Add padding to ensure content doesn't touch the edges
+    marginTop: 10, // Add some space at the top for the rounded corners
+    shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+  },
   label: {
     fontSize: 16,
     marginLeft: 8,
@@ -289,9 +305,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   tabBar: {
-    backgroundColor: "#081638",
-    elevation: 0,
-    shadowOpacity: 0,
+    // If you need to adjust the tab bar style as well, do it here
+    backgroundColor: "transparent", // Or any other color
+    elevation: 0, // Remove shadow on Android
+    shadowOpacity: 0, // Remove shadow on iOS
+    overflow: "hidden", // Hide the overflow on Android
+    borderTopLeftRadius: 20, // Match the border radius with the tab content
+    borderTopRightRadius: 20, // Match the border radius with the tab content
+    // Other styles...
   },
   tabLabel: {
     color: "#FFFFFF",
