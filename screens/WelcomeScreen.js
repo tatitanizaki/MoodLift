@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import vibeAnswers from "../assets/vibeAnswers.json";
 import Svg, { Circle, Path } from "react-native-svg";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
 const WelcomeScreen = ({ navigation }) => {
   const [questions, setQuestions] = useState({
@@ -60,7 +60,7 @@ const WelcomeScreen = ({ navigation }) => {
             style={styles.dumbbellButton}
             onPress={() => navigation.navigate("Settings")}
           >
-            <FontAwesome5 name="sliders-h" size={25} color="#FFFFFF" />
+            <FontAwesome6 name="sliders-h" size={25} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
         <Svg

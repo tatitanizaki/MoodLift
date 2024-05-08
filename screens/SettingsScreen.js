@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Checkbox } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 const initialLayout = { width: Dimensions.get("window").width };
@@ -161,7 +161,7 @@ const SettingsScreen = ({ navigation }) => {
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
-            <FontAwesome5 name="arrow-left" size={25} color="#FFFFFF" />
+            <FontAwesome6 name="arrow-left" size={25} color="#FFFFFF" />
           </TouchableOpacity>
           <View style={{ flex: 1, alignItems: "center" }}>
             <View style={styles.roundedShape}>
